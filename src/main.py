@@ -1,8 +1,8 @@
 import sys
 import time
-from card import Card
-from solver import Board, BFS, DFS, AStar, BestFirst, heuristic_function
-import processMemoryReader as pmr
+from aisolver.card import Card
+from aisolver.solver import Board, BFS, DFS, AStar, BestFirst, heuristic_function
+import memory.processMemoryReader as pmr
 
 
 
