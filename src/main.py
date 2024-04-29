@@ -11,8 +11,8 @@ method = "best"
 outfile = "out.txt"
 card_byte_offset = 4
 card_enumeration = {}
-column_byte_offset = 54
-process_name = "Freecell.exe"
+column_byte_offset = 0x54
+process_name = "freecell.exe"
 column_base_address = 0x01007554
 stack_length = [7, 7, 7, 7, 6, 6, 6, 6]
     
@@ -40,14 +40,14 @@ def main():
             
         # Add column to deck   
         game_deck.append(column_cards)
-    
+
     # Initialize game
     start_freecells = 4*[0]
     start_foundations = [[] for j in range(4)]
     
     # Initialize board
-    start_board = Board((game_deck, start_freecells, start_foundations))
-    
+    start_board = Board(([['D1'],['S1'],['C1'],['H1']], start_freecells, start_foundations))
+
     # Start GUI
     app = QApplication(sys.argv)
     

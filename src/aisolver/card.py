@@ -6,8 +6,8 @@ class Card:
         suit_mapping = {
             0: 'C',
             1: 'D',
-            2: 'S',
-            3: 'H'
+            2: 'H',
+            3: 'S'
         }
 
         # Extract the rank and suit from the card code
@@ -15,7 +15,7 @@ class Card:
         suit = card_code % 4
 
         # Convert rank to a letter (A, 2, 3, ..., K)
-        rank_letter = str(rank + 1) if rank < 9 else ['T', 'J', 'Q', 'K'][rank - 9]
+        rank_letter = str(rank + 1) if rank < 9 else ['10', '11', '12', '13'][rank - 9]
 
         # Construct the final representation
         card = f"{suit_mapping[suit]}{rank_letter}"

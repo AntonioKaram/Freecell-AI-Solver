@@ -1,8 +1,8 @@
+import sys
+from aisolver.solver import BFS, DFS, AStar, BestFirst
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QComboBox, QGraphicsScene, QGraphicsView, QGraphicsRectItem
 from PyQt5.QtGui import QBrush
 from PyQt5.QtCore import Qt
-from aisolver.solver import BFS, DFS, AStar, BestFirst
-import sys
 import memory.processMemoryReader as pmr
 
 class MainWindow(QWidget):
@@ -26,7 +26,7 @@ class MainWindow(QWidget):
         layout.addWidget(self.run_button)
 
         self.combo_box = QComboBox()
-        self.combo_box.addItems(self.models)
+        self.combo_box.addItems(self.menu_items)
         layout.addWidget(self.combo_box)
         
         self.run_button = QPushButton('Select')
@@ -71,14 +71,18 @@ class MainWindow(QWidget):
                 
             self.model_paths.append(path)
         
+        self.menu_items.clear()
         for model, path in zip(self.models, self.model_paths):
-            self.menu_options.append(model + " - " + str(len(path)) + " moves")
+            self.menu_items.append(model + " - " + str(len(path)) + " moves")
+
+        self.combo_box.clear()  # Clear the combo box
+        self.combo_box.addItems(self.menu_items)
             
     def write_solution(self):
-        self.model = self.selected_option.get().split(" -")
+        self.model = self.combo_box.currentText().split(" -")[0]
         self.path = self.model_paths[self.models.index(self.model)]
         
-        pmr.write_to_file(self.path, "out.txt")
+        pmr.processMemoryReader.write_to_file(self.path, "out.txt")
         
         self.count_moves = len(self.path)
 

@@ -2,6 +2,7 @@ import ctypes
 import win32api
 import win32process
 import win32con
+import psutil
 
 class processMemoryReader:
     def __init__(self, process_name):
@@ -9,27 +10,9 @@ class processMemoryReader:
         self.process_id = self._get_process_id()
 
     def _get_process_id(self):
-        
-        # Get list of running processes
-        processes = win32process.EnumProcesses()
-        for process_id in processes:
-            if process_id == -1:
-                continue
-            try:
-                
-                # Load the processs
-                p_handle = win32api.OpenProcess(
-                    win32con.PROCESS_QUERY_INFORMATION | win32con.PROCESS_VM_READ,
-                    True,
-                    process_id
-                )
-                modules = win32process.EnumProcessModules(p_handle)
-                for module_id in modules:
-                    name = str(win32process.GetModuleFileNameEx(p_handle, module_id))
-                    if name.lower().find(self.process_name) != -1:
-                        return process_id
-            finally:
-                win32api.CloseHandle(p_handle)
+        for proc in psutil.process_iter(['pid', 'name']):
+           if proc.info['name'] == self.process_name:
+               return proc.info['pid']
         return None
 
     def read_memory(self, address, size_of_data=4):
