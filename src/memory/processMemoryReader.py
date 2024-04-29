@@ -51,6 +51,15 @@ class processMemoryReader:
 
         ctypes.windll.kernel32.CloseHandle(p_handle)
         return data.value
+    
+    def write_to_file(path: list, filename: str):
+        with open(filename, 'w') as outfile:
+            try:
+                outfile.write(str(len(path))+'\n')
+                outfile.write('\n'.join(move for move in path))
+                print('Solution written to file {}'.format(filename))
+            except IOError as e:
+                raise e
 
 # Example usage
 if __name__ == "__main__":

@@ -4,8 +4,6 @@ from aisolver.card import Card
 from aisolver.solver import Board, BFS, DFS, AStar, BestFirst, heuristic_function
 import memory.processMemoryReader as pmr
 
-
-
 # Globals
 method = "best"
 outfile = "out.txt"
@@ -18,14 +16,6 @@ process_name = "Freecell.exe"
 column_base_address = 0x01007554
 stack_length = [7, 7, 7, 7, 6, 6, 6, 6]
 
-def write_to_file(path: list, filename: str):
-        with open(filename, 'w') as outfile:
-            try:
-                outfile.write(str(len(path))+'\n')
-                outfile.write('\n'.join(move for move in path))
-                print('Solution written to file {}'.format(filename))
-            except IOError as e:
-                raise e
 
 def main():
     
@@ -69,7 +59,7 @@ def main():
             path = 0
         
         if path:
-            write_to_file(path, outfile)
+            pmr.write_to_file(path, outfile)
         else:
             print('No solution found')
 
@@ -81,7 +71,7 @@ def main():
             path = 0
         
         if path:
-            write_to_file(path, outfile)
+            pmr.write_to_file(path, outfile)
         else:
             print('No solution found')
 
@@ -93,7 +83,7 @@ def main():
             path = 0
         
         if path:
-            write_to_file(path, outfile)
+            pmr.write_to_file(path, outfile)
         else:
             print('No solution found')
     
@@ -105,7 +95,7 @@ def main():
             path = 0
         
         if path:
-            write_to_file(path, outfile)
+            pmr.write_to_file(path, outfile)
         else:
             print('No solution found')
     else:
