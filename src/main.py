@@ -1,7 +1,7 @@
 import sys
 import time
 from card import Card
-from solver import Board, BFS, FileIO, DFS, AStar, BestFirst, heuristic_function
+from solver import Board, BFS, DFS, AStar, BestFirst, heuristic_function
 import processMemoryReader as pmr
 
 
@@ -17,6 +17,15 @@ column_byte_offset = 54
 process_name = "Freecell.exe"
 column_base_address = 0x01007554
 stack_length = [7, 7, 7, 7, 6, 6, 6, 6]
+
+def write_to_file(path: list, filename: str):
+        with open(filename, 'w') as outfile:
+            try:
+                outfile.write(str(len(path))+'\n')
+                outfile.write('\n'.join(move for move in path))
+                print('Solution written to file {}'.format(filename))
+            except IOError as e:
+                raise e
 
 def main():
     
@@ -36,14 +45,18 @@ def main():
             # Read the cards in the chunk
             card_hex = memory_reader.read_memory(column_address + (j*card_byte_offset)) 
             
-            # Add card to initial state
+            # Add card to column
             card = Card.encode_card(card_hex)
             column_cards.append(card)
             
+        # Add column to deck   
         game_deck.append(column_cards)
     
+    # Initialize game
     start_freecells = 4*[0]
     start_foundations = [[] for j in range(4)]
+    
+    # Initialize board
     start_board = Board((game_deck, start_freecells, start_foundations))
             
     start = time.time()    
@@ -56,7 +69,7 @@ def main():
             path = 0
         
         if path:
-            FileIO.write_to_file(path, outfile)
+            write_to_file(path, outfile)
         else:
             print('No solution found')
 
@@ -68,7 +81,7 @@ def main():
             path = 0
         
         if path:
-            FileIO.write_to_file(path, outfile)
+            write_to_file(path, outfile)
         else:
             print('No solution found')
 
@@ -80,7 +93,7 @@ def main():
             path = 0
         
         if path:
-            FileIO.write_to_file(path, outfile)
+            write_to_file(path, outfile)
         else:
             print('No solution found')
     
@@ -92,7 +105,7 @@ def main():
             path = 0
         
         if path:
-            FileIO.write_to_file(path, outfile)
+            write_to_file(path, outfile)
         else:
             print('No solution found')
     else:
