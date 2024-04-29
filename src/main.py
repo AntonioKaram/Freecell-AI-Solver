@@ -1,8 +1,7 @@
-import sys
-import time
 from aisolver.card import Card
-from aisolver.solver import Board, BFS, DFS, AStar, BestFirst, heuristic_function
+from aisolver.board import Board
 import memory.processMemoryReader as pmr
+from aisolver.solver import BFS, DFS, AStar, BestFirst
 
 # Globals
 method = "best"
@@ -48,61 +47,19 @@ def main():
     
     # Initialize board
     start_board = Board((game_deck, start_freecells, start_foundations))
+    
+    # Compare algorithms
+    model_paths = []
+    for seeker in [BFS(start_board), DFS(start_board), AStar(start_board), BestFirst(start_board)]:
+        try:
+            path = next(seeker.search())
+        except StopIteration:
+            path = 0
             
-    start = time.time()    
-    
-    if method=='breadth':
-        seeker = BFS(start_board)
-        try:
-            path = next(seeker.search())
-        except StopIteration:
-            path = 0
-        
-        if path:
-            pmr.write_to_file(path, outfile)
-        else:
-            print('No solution found')
+        model_paths.append(path)
 
-    elif method=='depth':
-        seeker = DFS(start_board)
-        try:
-            path = next(seeker.search())
-        except StopIteration:
-            path = 0
-        
-        if path:
-            pmr.write_to_file(path, outfile)
-        else:
-            print('No solution found')
+    pmr.write_to_file(model_paths[0], outfile)
 
-    elif method=='astar':
-        seeker = AStar(start_board, heuristic_function)
-        try:
-            path = next(seeker.search())
-        except StopIteration:
-            path = 0
-        
-        if path:
-            pmr.write_to_file(path, outfile)
-        else:
-            print('No solution found')
-    
-    elif method=='best':
-        seeker = BestFirst(start_board, heuristic_function)
-        try:
-            path = next(seeker.search())
-        except StopIteration:
-            path = 0
-        
-        if path:
-            pmr.write_to_file(path, outfile)
-        else:
-            print('No solution found')
-    else:
-        print('Enter a valid method {breadth, depth, astar, best}')
-        sys.exit(1)
-
-    print('Time taken: {}s'.format(str(time.time()-start)[:5]))
 
 
 if __name__=="__main__":
