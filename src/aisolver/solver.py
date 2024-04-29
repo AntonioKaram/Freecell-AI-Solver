@@ -1,7 +1,7 @@
 
-from board import Board
-from prioritqueue import PQAstar, PQBestFirst
 from collections import deque
+from aisolver.board import Board
+from aisolver.prioritqueue import PQAstar, PQBestFirst
 
 def heuristic_function(board: Board):
     empty_freecells=board.freecells.count(0)
@@ -83,7 +83,6 @@ class AStar:
                     if node in self.visited:
                         continue
                     queue.put((node, path+[move]))
-                    #print(node)
                     self.visited.add(node)
 
 class BestFirst:
@@ -102,8 +101,6 @@ class BestFirst:
             self.nodes_visited+=1
 
             if state.goal():
-                #print('Solved!', node)
-                #print('Total nodes visited: {}'.format(self.nodes_visited))
                 yield path
 
             for children in state._children():

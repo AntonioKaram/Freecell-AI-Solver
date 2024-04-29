@@ -1,21 +1,21 @@
+import sys
 from aisolver.card import Card
 from aisolver.board import Board
+from gui import QApplication, MainWindow
 import memory.processMemoryReader as pmr
-from aisolver.solver import BFS, DFS, AStar, BestFirst
 
 # Globals
-method = "best"
-outfile = "out.txt"
 game_deck = []
 num_columns = 8
+method = "best"
+outfile = "out.txt"
 card_byte_offset = 4
 card_enumeration = {}
 column_byte_offset = 54
 process_name = "Freecell.exe"
 column_base_address = 0x01007554
 stack_length = [7, 7, 7, 7, 6, 6, 6, 6]
-
-
+    
 def main():
     
     # Initialize memory reader for the running process
@@ -48,18 +48,19 @@ def main():
     # Initialize board
     start_board = Board((game_deck, start_freecells, start_foundations))
     
-    # Compare algorithms
-    model_paths = []
-    for seeker in [BFS(start_board), DFS(start_board), AStar(start_board), BestFirst(start_board)]:
-        try:
-            path = next(seeker.search())
-        except StopIteration:
-            path = 0
-            
-        model_paths.append(path)
+    # Start GUI
+    app = QApplication(sys.argv)
+    
+    # Show window
+    window = MainWindow(start_board)
+    window.show()
+    
+    # Launch GUI
+    app.exec_()
+        
 
-    pmr.write_to_file(model_paths[0], outfile)
-
+    
+    
 
 
 if __name__=="__main__":
