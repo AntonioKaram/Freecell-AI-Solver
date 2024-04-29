@@ -1,7 +1,8 @@
 from collections import defaultdict
 from typing import List
+from card import Card
 
-class Utlis:
+class Utils:
     DIAMONDS = 0
     SPADES = 1
     CLUBS = 2
@@ -12,34 +13,34 @@ class Utlis:
     FREECELL = "freecell"
     NEWSTACK = "newstack"
 
-    BREADTH = "breadth"
-    DEPTH = "depth"
-    BEST = "best"
-    ASTAR = "astar"
+    BREADTH = "BFS"
+    DEPTH = "DFS"
+    BEST = "B+"
+    ASTAR = "A*"
 
     # Time limit up to 30 seconds
     LIMIT = 30000
 
     # N cards in a single foundation when game completed
     # gets updated when we initialize the initial state
-    N = 0
+    N = 13
 
     @staticmethod
     def get_method(method: str) -> str:
         method = method.lower()
-        if method == MyUtils.BREADTH:
-            return MyUtils.BREADTH
-        elif method == MyUtils.DEPTH:
-            return MyUtils.DEPTH
-        elif method == MyUtils.BEST:
-            return MyUtils.BEST
+        if method == Utils.BREADTH:
+            return Utils.BREADTH
+        elif method == Utils.DEPTH:
+            return Utils.DEPTH
+        elif method == Utils.BEST:
+            return Utils.BEST
         else:
             print("Invalid method provided. Using ASTAR (because it's faster).")
-            return MyUtils.ASTAR
+            return Utils.ASTAR
 
     @staticmethod
     def get_foundation(state, value: str):
-        return state.get_foundations().get(getattr(MyUtils, value))
+        return state.get_foundations().get(getattr(Utils, value))
 
     @staticmethod
     def get_card_by_identifier(state, suit: str, value: int):

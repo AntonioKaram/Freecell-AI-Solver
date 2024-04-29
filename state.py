@@ -2,7 +2,7 @@ class State:
     def __init__(self):
         self.freecells = []
         self.foundations = [[] for _ in range(4)]
-        self.stacks = [[] for _ in range(8)]
+        self.columns = [[] for _ in range(8)]
         self.pair = {}
         self.move = ""
         self.method = ""
