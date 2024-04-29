@@ -13,16 +13,19 @@ def heuristic_function(board: Board):
 
 class BFS:
 
-    def __init__(self, start_board):
+    def __init__(self, start_board, max_iter=500000):
         self.start_board = start_board
         self.visited = set()
         self.nodes_visited = 0
+        self.max_iter = max_iter
 
 
     def search(self):
         queue = deque([(self.start_board, [])])
         
-        while queue:
+        while queue and self.nodes_visited <= self.max_iter:
+            # if not (self.nodes_visited % 100):
+            #     print(self.nodes_visited)
             (state,path) = queue.popleft()
             self.nodes_visited += 1
 
@@ -39,12 +42,16 @@ class BFS:
 
 class DFS:
 
-    def __init__(self, start_board):
+    def __init__(self, start_board, max_iter=500000):
         self.start_board = start_board
         self.nodes_visited = 0
+        self.max_iter = max_iter
         self.visited = deque([])
 
     def search(self, state=None, path=None):
+
+        if self.nodes_visited >= self.max_iter:
+            return
         self.nodes_visited+=1
         self.visited+=[state]
 
@@ -61,18 +68,19 @@ class DFS:
                     yield from self.search(node, path+[move])
 
 class AStar:
-    def __init__(self, start_board, heuristic=heuristic_function):
+    def __init__(self, start_board, heuristic=heuristic_function, max_iter = 500000):
         self.start_board = start_board
         self.heuristic = heuristic
         self.visited = set()
+        self.max_iter = max_iter
         self.nodes_visited = 0
 
     def search(self):
         queue = PQAstar(self.heuristic)
         queue.put((self.start_board, []))
 
-        while not queue.empty():
-            state,path=queue.get() 
+        while not queue.empty() and self.nodes_visited <= self.max_iter:
+            state, path=queue.get() 
             self.nodes_visited+=1
 
             if state.goal():
@@ -86,17 +94,18 @@ class AStar:
                     self.visited.add(node)
 
 class BestFirst:
-    def __init__(self, start_board, heuristic=heuristic_function):
+    def __init__(self, start_board, heuristic=heuristic_function, max_iter=500000):
         self.start_board = start_board
         self.heuristic = heuristic
         self.visited = set()
         self.nodes_visited = 0
+        self.max_iter = max_iter
 
     def search(self):
         queue = PQBestFirst(self.heuristic)
         queue.put((self.start_board, []))
 
-        while not queue.empty():
+        while not queue.empty() and self.nodes_visited <= self.max_iter:
             state,path=queue.get() 
             self.nodes_visited+=1
 

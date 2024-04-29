@@ -1,9 +1,11 @@
 import sys
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QBrush
+import memory.processMemoryReader as pmr
+from concurrent.futures import ThreadPoolExecutor
 from aisolver.solver import BFS, DFS, AStar, BestFirst
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QComboBox, QGraphicsScene, QGraphicsView, QGraphicsRectItem
-from PyQt5.QtGui import QBrush
-from PyQt5.QtCore import Qt
-import memory.processMemoryReader as pmr
+
 
 class MainWindow(QWidget):
     def __init__(self, start_board):
@@ -56,20 +58,28 @@ class MainWindow(QWidget):
         self.moves_label = QLabel(f'Moves remaining: {self.count_moves}')
         layout.addWidget(self.moves_label)
 
-    def run_algorithm(self):        
-        for seeker, alg in zip([BFS(self.start_board), DFS(self.start_board), AStar(self.start_board), BestFirst(self.start_board)], self.models):
-            print(f"Running {alg}...")
-            try:
-                path = next(seeker.search())
-            except StopIteration:
-                path = []
+
+    def single_thread(self, seeker, alg):
+        print(f"Running {alg}...")
+        try:
+            path = next(seeker.search())
+        except StopIteration:
+            path = []
+        
+        if path:
+            print(f"{alg} Found a solution! Path length: {len(path)}")
+        else:
+            print(f"No solution found")
             
-            if path:
-                print(f"Found a solution! Path length: {path}")
-            else:
-                print(f"No solution found")
-                
-            self.model_paths.append(path)
+        return path
+
+    def run_algorithm(self):  
+        with ThreadPoolExecutor() as executor:
+            self.model_paths = list(executor.map(self.single_thread, [AStar(self.start_board)], ["A Star Search"]))  
+            # self.model_paths = list(executor.map(self.single_thread, [BFS(self.start_board),
+            #                                                      DFS(self.start_board),
+            #                                                      AStar(self.start_board),
+            #                                                      BestFirst(self.start_board)], self.models))      
         
         self.menu_items.clear()
         for model, path in zip(self.models, self.model_paths):
@@ -84,7 +94,9 @@ class MainWindow(QWidget):
         
         pmr.processMemoryReader.write_to_file(self.path, "out.txt")
         
+        self.moves_label.clear()
         self.count_moves = len(self.path)
+        self.moves_label.setText(f'Moves remaining: {self.count_moves}')
 
     def next_card(self):
         pass

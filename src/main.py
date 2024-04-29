@@ -46,7 +46,7 @@ def main():
     start_foundations = [[] for j in range(4)]
     
     # Initialize board
-    start_board = Board(([['D1'],['S1'],['C1'],['H1']], start_freecells, start_foundations))
+    start_board = Board((game_deck, start_freecells, start_foundations))
 
     # Start GUI
     app = QApplication(sys.argv)
