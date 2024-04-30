@@ -1,4 +1,5 @@
 import sys
+import time
 import aisolver.card as c
 from PyQt5.QtCore import Qt, QRectF
 import memory.processMemoryReader as pmr
@@ -12,7 +13,7 @@ class MainWindow(QWidget):
     def __init__(self, start_board):
         super().__init__()
         
-        self.setWindowTitle("Solitaire Solver")
+        self.setWindowTitle("Freecell Solver")
         self.model = ""
         self.path = []
         self.count_moves = 0
@@ -21,8 +22,12 @@ class MainWindow(QWidget):
         self.start_board = start_board
         self.models = ["Depth First Search", "A Star Search", "Best First Search"]
         self.setGeometry(100, 100, 800, 600)
-
+        self.finish_label = None
         self.arrow_image = None
+
+        self.label_font = QFont()
+        self.label_font.setBold(True)
+
 
         self.instruction_label = None
 
@@ -93,6 +98,19 @@ class MainWindow(QWidget):
         self.moves_label.setText(f'Moves remaining: {self.count_moves}')
         self.next_button.show()
 
+    def finish(self):
+        self.scene.clear()
+        self.finish_label = QLabel("Solved!")
+        font = QFont()
+        self.finish_label.move(-100,-100)
+        font.setPointSize(72)
+        font.setBold(True)
+        self.finish_label.setFont(font)
+        self.finish_label.setStyleSheet("background-color: white;")
+        self.scene.addWidget(self.finish_label)
+        self.next_button.hide()
+
+
     def next_card(self):
 
         # Decrease num moves
@@ -101,12 +119,7 @@ class MainWindow(QWidget):
         self.moves_label.setText(f'Moves remaining: {self.count_moves}')
 
         if self.count_moves <= 0:
-            self.scene.clear()
-            self.finish_label = QLabel("BANG!")
-            font = QFont()
-            self.instruction_label.move(0,0)
-            font.setPointSize(40)
-            self.scene.addWidget(self.finish_label)
+            self.finish()
             return
 
         # Get next instruction
@@ -136,6 +149,8 @@ class MainWindow(QWidget):
 
             if self.instruction_label: self.instruction_label.clear()
             self.instruction_label = QLabel(f"Stack the {c.code_to_name(instruction[1])} on the {c.code_to_name(instruction[2])}")
+            self.instruction_label.setFont(self.label_font)
+            self.instruction_label.setStyleSheet("background-color: white;")
             self.instruction_label.move(-50,-150)
             self.scene.addWidget(self.instruction_label)
 
@@ -152,51 +167,25 @@ class MainWindow(QWidget):
             path.addRoundedRect(rect, radius, radius)
 
             self.card2 = QGraphicsPathItem(path)
-            self.card2.setBrush(QBrush(Qt.green))
+            self.card2.setBrush(QBrush(QColor("#0C2340")))
             self.card2.setPos(150, -75)
             self.scene.addItem(self.card2)
 
             self.command_label = QLabel(f'{command.title()}')
-            self.command_label.move(198-len(command)*2,-13)
+            self.command_label.setFont(self.label_font)
+            self.command_label.setStyleSheet("background-color: #0C2340; color: #C99700;")
+            self.command_label.move(193-len(command)*2,-13)
             self.scene.addWidget(self.command_label)
 
 
             if self.instruction_label: self.instruction_label.clear()
             self.instruction_label = QLabel(f"Move the {c.code_to_name(instruction[1])} to the {command.title()}")
+            self.instruction_label.setFont(self.label_font)
+            self.instruction_label.setStyleSheet("background-color: white;")
             self.instruction_label.move(-50,-150)
             self.scene.addWidget(self.instruction_label)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        # for e in instruction:
-        #     filename = c.card_code_to_pic(e)
-
-        
-
-
-
-
         print(instruction)
 
-        pass
 
 
