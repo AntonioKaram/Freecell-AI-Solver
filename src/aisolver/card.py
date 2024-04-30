@@ -1,3 +1,8 @@
+import sys
+from PyQt5.QtWidgets import QLabel, QMainWindow, QApplication, QWidget, QVBoxLayout
+from PyQt5.QtGui import QPixmap
+from PIL import Image
+
 class Card:
     # Decode hex value from memory file
     def encode_card(card_code):
@@ -22,6 +27,34 @@ class Card:
 
         return card
 
+pad_zeros = lambda x: str(x) if len(str(x))>=2 else '0'*(2-len(str(x)))+str(x)
+
+# C1, D13, H2, S5
+def card_code_to_pic(card_code):
+    suit_char_to_num = {
+            'C': 0,
+            'D': 1,
+            'H': 2,
+            'S': 3,
+        }
+    suit_num_to_name = {
+            0: 'clubs',
+            1: 'diamonds',
+            2: 'hearts',
+            3: 'spades'
+        }
+    suit = card_code[0]
+    rank_start = suit_char_to_num[suit]*13
+    card_num = pad_zeros(rank_start + int(card_code[1:]))
+    file_name = f"../../data/img/cards_{card_num}_{suit_num_to_name[suit]}.bmp"
+    return file_name
+
+def addQtImage(path, window, layout):
+    label = QLabel(window)
+    pixmap = QPixmap(path)
+    label.setPixmap(pixmap)
+    window.resize(pixmap.width(), pixmap.height()) 
+    layout.addWidget(label)
 
 # Example usage
 if __name__ == "__main__":
@@ -36,5 +69,27 @@ if __name__ == "__main__":
     print(card3)
     print(card4)
     print(card5)
-    
+
+    class Menu(QMainWindow):
+
+        def __init__(self):
+            super().__init__()
+            self.setWindowTitle("Title")
+            
+            self.central_widget = QWidget()               
+            self.setCentralWidget(self.central_widget)    
+            lay = QVBoxLayout(self.central_widget)
+            
+            # label = QLabel(self)
+            # pixmap = QPixmap('cards/cards_01_clubs.bmp')
+            # label.setPixmap(pixmap)
+            # self.resize(pixmap.width(), pixmap.height())
+            
+            # lay.addWidget(label)
+            addQtImage('cards/cards_01_clubs.bmp', self, lay)
+            self.show()
+
+    app = QApplication(sys.argv)
+    ex = Menu()
+    sys.exit(app.exec_())
     
