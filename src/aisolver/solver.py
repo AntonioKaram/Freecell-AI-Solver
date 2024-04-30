@@ -29,9 +29,6 @@ def heuristic_function(board: Board):
     return (distane_to_goal * 85) + (distance_from_top *7) + (uppest_home_card * 8)
 
 
-
-
-
 class BFS:
 
     def __init__(self, start_board, max_iter=500000):

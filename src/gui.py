@@ -4,7 +4,7 @@ from PyQt5.QtCore import Qt, QRectF
 import memory.processMemoryReader as pmr
 from concurrent.futures import ThreadPoolExecutor
 from aisolver.solver import BFS, DFS, AStar, BestFirst
-from PyQt5.QtGui import QImage, QPixmap, QPainterPath, QBrush, QColor
+from PyQt5.QtGui import QImage, QPixmap, QPainterPath, QBrush, QColor, QFont
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QComboBox, QGraphicsScene, QGraphicsView, QGraphicsRectItem, QGraphicsPixmapItem, QGraphicsPathItem
 
 
@@ -19,7 +19,7 @@ class MainWindow(QWidget):
         self.model_paths = []
         self.menu_items = []
         self.start_board = start_board
-        self.models = ["Breadth First Search", "Depth First Search", "A Star Search", "Best First Search"]
+        self.models = ["Depth First Search", "A Star Search", "Best First Search"]
         self.setGeometry(100, 100, 800, 600)
 
         self.arrow_image = None
@@ -70,17 +70,16 @@ class MainWindow(QWidget):
 
     def run_algorithm(self):  
         with ThreadPoolExecutor() as executor:
-            self.model_paths = list(executor.map(self.single_thread, [DFS(self.start_board), AStar(self.start_board)], ["DFS", "A Star"]))  
-            # self.model_paths = list(executor.map(self.single_thread, [BFS(self.start_board),
-            #                                                      DFS(self.start_board),
-            #                                                      AStar(self.start_board),
-            #                                                      BestFirst(self.start_board)], self.models))      
+            self.model_paths = list(executor.map(self.single_thread, [
+                                                                 DFS(self.start_board),
+                                                                 AStar(self.start_board),
+                                                                 BestFirst(self.start_board)], self.models))      
         
         self.menu_items.clear()
         for model, path in zip(self.models, self.model_paths):
             self.menu_items.append(model + " - " + str(len(path)) + " moves")
 
-        self.combo_box.clear()  # Clear the combo box
+        self.combo_box.clear()
         self.combo_box.addItems(self.menu_items)
             
     def write_solution(self):
@@ -101,15 +100,26 @@ class MainWindow(QWidget):
         self.count_moves -= 1
         self.moves_label.setText(f'Moves remaining: {self.count_moves}')
 
+        if self.count_moves <= 0:
+            self.scene.clear()
+            self.finish_label = QLabel("BANG!")
+            font = QFont()
+            self.instruction_label.move(0,0)
+            font.setPointSize(40)
+            self.scene.addWidget(self.finish_label)
+            return
+
         # Get next instruction
-        instruction = self.path.pop(0).split(" ")
-        command = instruction[0]
+        if self.path:
+            instruction = self.path.pop(0).split(" ")
+            command = instruction[0]
 
         if not self.arrow_image:
             self.arrow_image = QPixmap('../data/img/arrow.png').scaled(100, 150, Qt.KeepAspectRatio)
             self.arrow = QGraphicsPixmapItem(self.arrow_image)
             self.arrow.setPos(0, -30)
             self.scene.addItem(self.arrow)
+            
 
         if command == 'stack':
             f1 = c.card_code_to_pic(instruction[1])
