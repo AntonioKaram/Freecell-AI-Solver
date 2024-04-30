@@ -49,6 +49,22 @@ def card_code_to_pic(card_code):
     file_name = f"../data/img/cards_{card_num}_{suit_num_to_name[suit_char_to_num[suit]]}.bmp"
     return file_name
 
+def code_to_name(code):
+    suit_to_str = {
+        'C': ' of Clubs',
+        'D': ' of Diamonds',
+        'H': ' of Hearts',
+        'S': ' of Spades',
+    }
+
+
+    suit = suit_to_str[code[0]]
+    value = code[1:] if int(code[1:]) < 11 else ['Jack', 'Queen', 'King'][int(code[1:])%11]
+    value = value if value != "1" else "Ace"
+
+    return str(value) + suit
+
+
 def addQtImage(path, window, layout):
     label = QLabel(window)
     pixmap = QPixmap(path)

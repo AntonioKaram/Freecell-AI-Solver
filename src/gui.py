@@ -1,10 +1,10 @@
 import sys
 import aisolver.card as c
 from PyQt5.QtCore import Qt, QRectF
-from PyQt5.QtGui import QImage, QPixmap, QPainterPath, QBrush, QColor
 import memory.processMemoryReader as pmr
 from concurrent.futures import ThreadPoolExecutor
 from aisolver.solver import BFS, DFS, AStar, BestFirst
+from PyQt5.QtGui import QImage, QPixmap, QPainterPath, QBrush, QColor
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QComboBox, QGraphicsScene, QGraphicsView, QGraphicsRectItem, QGraphicsPixmapItem, QGraphicsPathItem
 
 
@@ -20,6 +20,8 @@ class MainWindow(QWidget):
         self.start_board = start_board
         self.models = ["Breadth First Search", "Depth First Search", "A Star Search", "Best First Search"]
         self.setGeometry(100, 100, 800, 600)
+
+        self.instruction_label = None
 
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
@@ -98,7 +100,6 @@ class MainWindow(QWidget):
 
         # Get next instruction
         instruction = self.path.pop(0).split(" ")
-
         command = instruction[0]
 
         if command == 'stack':
@@ -113,6 +114,11 @@ class MainWindow(QWidget):
             self.card2 = QGraphicsPixmapItem(sp2)
             self.card2.setPos(150, -75)
             self.scene.addItem(self.card2)
+
+            if self.instruction_label: self.instruction_label.clear()
+            self.instruction_label = QLabel(f"Stack the {c.code_to_name(instruction[1])} on the {c.code_to_name(instruction[2])}")
+            self.instruction_label.move(-50,-150)
+            self.scene.addWidget(self.instruction_label)
 
         else:
             filename = c.card_code_to_pic(instruction[-1])
@@ -134,6 +140,12 @@ class MainWindow(QWidget):
             self.command_label = QLabel(f'{command.title()}')
             self.command_label.move(198-len(command)*2,-13)
             self.scene.addWidget(self.command_label)
+
+
+            if self.instruction_label: self.instruction_label.clear()
+            self.instruction_label = QLabel(f"Move the {c.code_to_name(instruction[1])} to the {command.title()}")
+            self.instruction_label.move(-50,-150)
+            self.scene.addWidget(self.instruction_label)
 
 
 
