@@ -1,11 +1,11 @@
 import sys
 import aisolver.card as c
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QImage, QPixmap, QBrush
+from PyQt5.QtCore import Qt, QRectF
+from PyQt5.QtGui import QImage, QPixmap, QPainterPath, QBrush, QColor
 import memory.processMemoryReader as pmr
 from concurrent.futures import ThreadPoolExecutor
 from aisolver.solver import BFS, DFS, AStar, BestFirst
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QComboBox, QGraphicsScene, QGraphicsView, QGraphicsRectItem, QGraphicsPixmapItem
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QComboBox, QGraphicsScene, QGraphicsView, QGraphicsRectItem, QGraphicsPixmapItem, QGraphicsPathItem
 
 
 class MainWindow(QWidget):
@@ -36,18 +36,9 @@ class MainWindow(QWidget):
         self.run_button.clicked.connect(self.write_solution)
         self.layout.addWidget(self.run_button)
 
-
         self.scene = QGraphicsScene()
         self.view = QGraphicsView(self.scene)
         self.layout.addWidget(self.view)
-
-        # self.card1 = QGraphicsRectItem(0, 0, 100, 150)
-        # self.card1.setBrush(QBrush(Qt.green))
-        # self.card1.setPos(-150, -75)
-        # self.scene.addItem(self.card1)
-
-        
-
 
         self.next_button = QPushButton('Next')
         self.next_button.clicked.connect(self.next_card)
@@ -108,7 +99,6 @@ class MainWindow(QWidget):
         # Get next instruction
         instruction = self.path.pop(0).split(" ")
 
-        commands = ['newstack', 'foundation', 'stack', 'freecell']
         command = instruction[0]
 
         if command == 'stack':
@@ -132,7 +122,7 @@ class MainWindow(QWidget):
             self.scene.addItem(self.card1)
 
             path = QPainterPath()
-            radius = 10  # Adjust the radius as needed
+            radius = 5
             rect = QRectF(0, 0, 100, 135)
             path.addRoundedRect(rect, radius, radius)
 
@@ -140,6 +130,10 @@ class MainWindow(QWidget):
             self.card2.setBrush(QBrush(Qt.green))
             self.card2.setPos(150, -75)
             self.scene.addItem(self.card2)
+
+            self.command_label = QLabel(f'{command.title()}')
+            self.command_label.move(198-len(command)*2,-13)
+            self.scene.addWidget(self.command_label)
 
 
 
