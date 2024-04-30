@@ -6,23 +6,27 @@ from aisolver.board import Board
 from aisolver.prioritqueue import PQAstar, PQBestFirst
 
 def heuristic_function(board: Board):
-    empty_freecells=board.freecells.count(0)
-    cards_in_foundations=sum([len([sublist for sublist in each_foundation])\
-                                 for each_foundation in board.foundations])
-                                 
-    empty_stacks=sum([not stack for stack in board.stacks])
-    return cards_in_foundations*60+empty_stacks*30+empty_freecells*15+max(list(map(len, board.stacks)))*10
+    distane_to_goal = sum([len([sublist for sublist in each_foundation]) for each_foundation in board.foundations])
+    distance_from_top = mean([int(stack[-1][1:]) if stack else 0 for stack in board.stacks]) - mean([int(stack[-1][1:]) if stack else 0 for stack in board.foundations])
+
+    lowest_foundation = 99
+    for foundation in board.foundations:
+        for card in foundation:
+            lowest_foundation = min(lowest_foundation, int(card[1:]))
+    lowest_home_card = board.MAX_CARD - lowest_foundation
 
 
+    uppest_foundation = 0
+    for foundation in board.foundations:
+        for card in foundation:
+            uppest_foundation = max(uppest_foundation, int(card[1:]))
+    uppest_home_card = board.MAX_CARD - uppest_foundation
 
-    # distane_to_goal = (board.MAX_CARD * len(board.foundations)) - cards_in_foundations
-    # distance_from_top = mean([int(stack[-1][1:]) for stack in board.stacks]) - mean([int(stack[-1][1:]) if stack else 0 for stack in board.foundations])
-    # lowest_home_card = board.MAX_CARD - min(chain.from_iterable([int(card[1:]) for card in found for found in board.foundations]))
-    # uppest_home_card = board.MAX_CARD - max(chain.from_iterable([int(card[1:]) for card in found for found in board.foundations]))
-    # difference_home = max(chain.from_iterable([int(card[1:]) for card in found for found in board.foundations])) - min(chain.from_iterable([int(card[1:]) for card in found for found in board.foundations]))
-    # bottom_cards_sum = (board.MAX_CARD * 4) - sum([int(stack[0][1:]) for stack in board.stacks])
 
-    # return (distane_to_goal * 9) + (distance_from_top * 79) + (lowest_home_card * 1) + (uppest_home_card * 8) + (difference_home * 1) + (bottom_cards_sum * 2)
+    difference_home = uppest_foundation - lowest_foundation
+    bottom_cards_sum = (board.MAX_CARD * 4) - sum([int(stack[0][1:]) if stack else 0 for stack in board.stacks])
+
+    return (distane_to_goal * 85) + (distance_from_top *7) + (uppest_home_card * 8)
 
 
 

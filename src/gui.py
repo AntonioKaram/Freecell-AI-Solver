@@ -12,6 +12,7 @@ class MainWindow(QWidget):
     def __init__(self, start_board):
         super().__init__()
         
+        self.setWindowTitle("Solitaire Solver")
         self.model = ""
         self.path = []
         self.count_moves = 0
@@ -20,6 +21,8 @@ class MainWindow(QWidget):
         self.start_board = start_board
         self.models = ["Breadth First Search", "Depth First Search", "A Star Search", "Best First Search"]
         self.setGeometry(100, 100, 800, 600)
+
+        self.arrow_image = None
 
         self.instruction_label = None
 
@@ -67,7 +70,7 @@ class MainWindow(QWidget):
 
     def run_algorithm(self):  
         with ThreadPoolExecutor() as executor:
-            self.model_paths = list(executor.map(self.single_thread, [DFS(self.start_board)], [ "DFS"]))  
+            self.model_paths = list(executor.map(self.single_thread, [DFS(self.start_board), AStar(self.start_board)], ["DFS", "A Star"]))  
             # self.model_paths = list(executor.map(self.single_thread, [BFS(self.start_board),
             #                                                      DFS(self.start_board),
             #                                                      AStar(self.start_board),
@@ -101,6 +104,12 @@ class MainWindow(QWidget):
         # Get next instruction
         instruction = self.path.pop(0).split(" ")
         command = instruction[0]
+
+        if not self.arrow_image:
+            self.arrow_image = QPixmap('../data/img/arrow.png').scaled(100, 150, Qt.KeepAspectRatio)
+            self.arrow = QGraphicsPixmapItem(self.arrow_image)
+            self.arrow.setPos(0, -30)
+            self.scene.addItem(self.arrow)
 
         if command == 'stack':
             f1 = c.card_code_to_pic(instruction[1])
