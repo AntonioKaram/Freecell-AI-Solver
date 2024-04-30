@@ -1,6 +1,7 @@
 import sys
+import aisolver.card as c
 from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QImage, QPixmap
+from PyQt5.QtGui import QImage, QPixmap, QBrush
 import memory.processMemoryReader as pmr
 from concurrent.futures import ThreadPoolExecutor
 from aisolver.solver import BFS, DFS, AStar, BestFirst
@@ -20,75 +21,41 @@ class MainWindow(QWidget):
         self.models = ["Breadth First Search", "Depth First Search", "A Star Search", "Best First Search"]
         self.setGeometry(100, 100, 800, 600)
 
-        layout = QVBoxLayout()
-        self.setLayout(layout)
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
         
         self.run_button = QPushButton('Run')
         self.run_button.clicked.connect(self.run_algorithm)
-        layout.addWidget(self.run_button)
+        self.layout.addWidget(self.run_button)
 
         self.combo_box = QComboBox()
         self.combo_box.addItems(self.menu_items)
-        layout.addWidget(self.combo_box)
+        self.layout.addWidget(self.combo_box)
         
         self.run_button = QPushButton('Select')
         self.run_button.clicked.connect(self.write_solution)
-        layout.addWidget(self.run_button)
+        self.layout.addWidget(self.run_button)
 
 
         self.scene = QGraphicsScene()
         self.view = QGraphicsView(self.scene)
-        layout.addWidget(self.view)
+        self.layout.addWidget(self.view)
 
-
-
-
-
-
-        # self.card1 = QGraphicsPixmapItem(QPixmap())
+        # self.card1 = QGraphicsRectItem(0, 0, 100, 150)
         # self.card1.setBrush(QBrush(Qt.green))
         # self.card1.setPos(-150, -75)
         # self.scene.addItem(self.card1)
 
-        # self.card2 = QGraphicsPixmapItem(0, 0, 100, 150)
-        # self.card2.setBrush(QBrush(Qt.green))
-        # self.card2.setPos(150, -75)
-        # self.scene.addItem(self.card2)
-
-        # Load the original image into a QImage
-        image = QImage('../data/img/01c.png')
-
-        # Create the mirrored image
-        mirrored_image = image.mirrored(False, True)
-
-        # Create QPixmaps from the images
-        original_pixmap = QPixmap.fromImage(image)
-        mirrored_pixmap = QPixmap.fromImage(mirrored_image)
-
-        # Create QGraphicsPixmapItems for the cards
-        self.card1_item = QGraphicsPixmapItem(original_pixmap)
-        self.card2_item = QGraphicsPixmapItem(mirrored_pixmap)
-
-        # Scale the QGraphicsPixmapItems to fit the slots
-        self.card1_item.setScale(100 / original_pixmap.width())
-        self.card2_item.setScale(100 / mirrored_pixmap.width())
-
-        # Position the QGraphicsPixmapItems on the slots
-        self.card1_item.setPos(-150, -75)
-        self.card2_item.setPos(-150, 75)
-
-        # Add the QGraphicsPixmapItems to the scene
-        self.scene.addItem(self.card1_item)
-        self.scene.addItem(self.card2_item)
+        
 
 
         self.next_button = QPushButton('Next')
         self.next_button.clicked.connect(self.next_card)
         self.next_button.hide()
-        layout.addWidget(self.next_button)
+        self.layout.addWidget(self.next_button)
 
         self.moves_label = QLabel(f'Moves remaining: {self.count_moves}')
-        layout.addWidget(self.moves_label)
+        self.layout.addWidget(self.moves_label)
 
 
     def single_thread(self, seeker, alg):
@@ -107,7 +74,7 @@ class MainWindow(QWidget):
 
     def run_algorithm(self):  
         with ThreadPoolExecutor() as executor:
-            self.model_paths = list(executor.map(self.single_thread, [AStar(self.start_board), DFS(self.start_board), BestFirst(self.start_board)], ["A Star Search", "DFS", "Best"]))  
+            self.model_paths = list(executor.map(self.single_thread, [DFS(self.start_board)], [ "DFS"]))  
             # self.model_paths = list(executor.map(self.single_thread, [BFS(self.start_board),
             #                                                      DFS(self.start_board),
             #                                                      AStar(self.start_board),
@@ -132,11 +99,75 @@ class MainWindow(QWidget):
         self.next_button.show()
 
     def next_card(self):
-        instruction = self.path.pop(0)
 
+        # Decrease num moves
         self.moves_label.clear()
         self.count_moves -= 1
         self.moves_label.setText(f'Moves remaining: {self.count_moves}')
+
+        # Get next instruction
+        instruction = self.path.pop(0).split(" ")
+
+        commands = ['newstack', 'foundation', 'stack', 'freecell']
+        command = instruction[0]
+
+        if command == 'stack':
+            f1 = c.card_code_to_pic(instruction[1])
+            sp1 = QPixmap(f1).scaled(100, 150, Qt.KeepAspectRatio)
+            self.card1 = QGraphicsPixmapItem(sp1)
+            self.card1.setPos(-150, -75)
+            self.scene.addItem(self.card1)
+
+            f2 = c.card_code_to_pic(instruction[-1])
+            sp2 = QPixmap(f2).scaled(100, 150, Qt.KeepAspectRatio)
+            self.card2 = QGraphicsPixmapItem(sp2)
+            self.card2.setPos(150, -75)
+            self.scene.addItem(self.card2)
+
+        else:
+            filename = c.card_code_to_pic(instruction[-1])
+            scaled_pixmap = QPixmap(filename).scaled(100, 150, Qt.KeepAspectRatio)
+            self.card1 = QGraphicsPixmapItem(scaled_pixmap)
+            self.card1.setPos(-150, -75)
+            self.scene.addItem(self.card1)
+
+            path = QPainterPath()
+            radius = 10  # Adjust the radius as needed
+            rect = QRectF(0, 0, 100, 135)
+            path.addRoundedRect(rect, radius, radius)
+
+            self.card2 = QGraphicsPathItem(path)
+            self.card2.setBrush(QBrush(Qt.green))
+            self.card2.setPos(150, -75)
+            self.scene.addItem(self.card2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        # for e in instruction:
+        #     filename = c.card_code_to_pic(e)
+
+        
+
+
 
 
         print(instruction)

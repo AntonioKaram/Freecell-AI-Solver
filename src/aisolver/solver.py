@@ -1,5 +1,7 @@
 
 from collections import deque
+from statistics import mean
+from itertools import chain
 from aisolver.board import Board
 from aisolver.prioritqueue import PQAstar, PQBestFirst
 
@@ -7,9 +9,24 @@ def heuristic_function(board: Board):
     empty_freecells=board.freecells.count(0)
     cards_in_foundations=sum([len([sublist for sublist in each_foundation])\
                                  for each_foundation in board.foundations])
+                                 
     empty_stacks=sum([not stack for stack in board.stacks])
-
     return cards_in_foundations*60+empty_stacks*30+empty_freecells*15+max(list(map(len, board.stacks)))*10
+
+
+
+    # distane_to_goal = (board.MAX_CARD * len(board.foundations)) - cards_in_foundations
+    # distance_from_top = mean([int(stack[-1][1:]) for stack in board.stacks]) - mean([int(stack[-1][1:]) if stack else 0 for stack in board.foundations])
+    # lowest_home_card = board.MAX_CARD - min(chain.from_iterable([int(card[1:]) for card in found for found in board.foundations]))
+    # uppest_home_card = board.MAX_CARD - max(chain.from_iterable([int(card[1:]) for card in found for found in board.foundations]))
+    # difference_home = max(chain.from_iterable([int(card[1:]) for card in found for found in board.foundations])) - min(chain.from_iterable([int(card[1:]) for card in found for found in board.foundations]))
+    # bottom_cards_sum = (board.MAX_CARD * 4) - sum([int(stack[0][1:]) for stack in board.stacks])
+
+    # return (distane_to_goal * 9) + (distance_from_top * 79) + (lowest_home_card * 1) + (uppest_home_card * 8) + (difference_home * 1) + (bottom_cards_sum * 2)
+
+
+
+
 
 class BFS:
 

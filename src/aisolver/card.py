@@ -46,14 +46,14 @@ def card_code_to_pic(card_code):
     suit = card_code[0]
     rank_start = suit_char_to_num[suit]*13
     card_num = pad_zeros(rank_start + int(card_code[1:]))
-    file_name = f"../../data/img/cards_{card_num}_{suit_num_to_name[suit]}.bmp"
+    file_name = f"../data/img/cards_{card_num}_{suit_num_to_name[suit_char_to_num[suit]]}.bmp"
     return file_name
 
 def addQtImage(path, window, layout):
     label = QLabel(window)
     pixmap = QPixmap(path)
     label.setPixmap(pixmap)
-    window.resize(pixmap.width(), pixmap.height()) 
+    # window.resize(1000, 1000) 
     layout.addWidget(label)
 
 # Example usage
@@ -79,17 +79,22 @@ if __name__ == "__main__":
             self.central_widget = QWidget()               
             self.setCentralWidget(self.central_widget)    
             lay = QVBoxLayout(self.central_widget)
+
+            label = QLabel(self)
+            pixmap = QPixmap('cards_01_clubs.bmp')
+            label.setPixmap(pixmap)
+            self.resize(pixmap.width(), pixmap.height())
             
-            # label = QLabel(self)
-            # pixmap = QPixmap('cards/cards_01_clubs.bmp')
-            # label.setPixmap(pixmap)
-            # self.resize(pixmap.width(), pixmap.height())
-            
-            # lay.addWidget(label)
-            addQtImage('cards/cards_01_clubs.bmp', self, lay)
+            lay.addWidget(label)
+            # addQtImage(card_code_to_pic('C1'), self, lay)
             self.show()
+
+    # for i in ['C1', 'D13', 'H2', 'S5']:
+    #     print(card_code_to_pic(i))
 
     app = QApplication(sys.argv)
     ex = Menu()
-    sys.exit(app.exec_())
+    app.exec_()
+    sys.exit()
+    
     

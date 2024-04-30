@@ -1,293 +1,395 @@
-292
-foundation C1
-stack H5 S6
-foundation S1
-stack C9 D10
-stack D12 S13
-stack D6 C7
-stack S11 H12
-stack D6 S7
-stack S11 D12
-freecell C9
-stack D10 S11
-stack C9 D10
-stack D6 C7
-freecell S7
-stack C4 H5
-foundation H1
-freecell S3
-freecell S9
-newstack S7
-stack D6 S7
-freecell D9
-stack S9 H10
-stack D6 C7
-freecell S7
-newstack D9
-freecell C9
-freecell D9
-stack S9 D10
-stack C9 H10
-newstack S7
-stack D6 S7
+394
 freecell H12
-stack H3 C4
-stack S12 D13
-stack D6 C7
-freecell S7
-stack C5 D6
-newstack H12
-freecell D7
-stack H11 S12
-stack C11 H12
-stack D7 C8
-stack H11 C12
-freecell C9
-stack H10 C11
-stack C9 H10
-stack S12 H13
-stack H11 S12
-freecell C9
-stack S9 H10
-stack C9 D10
-stack H11 C12
-freecell D13
-foundation S2
-foundation S3
-stack D7 S8
-stack H11 S12
-freecell C8
-stack S10 H11
-stack D9 S10
-stack C8 D9
-stack D7 C8
-newstack D13
-stack C12 D13
-stack D7 S8
-freecell S9
-stack C9 H10
-stack S9 D10
-stack D7 C8
-freecell S8
-foundation H2
-foundation H3
-freecell C10
-newstack S8
-stack D7 S8
-freecell C9
-stack S9 H10
-stack C9 D10
-stack D7 C8
-freecell S8
-newstack S7
-freecell C5
-stack D6 S7
-stack C5 D6
-freecell S9
-stack C9 H10
-stack S9 D10
-freecell C7
-stack C5 H6
-stack S5 D6
-freecell H7
-stack S8 H9
-stack H7 S8
-freecell C9
-stack S9 H10
-stack C9 D10
-freecell S5
-stack C5 D6
-stack S5 H6
-freecell S9
-stack C9 H10
-stack S9 D10
-freecell H7
-stack D7 S8
-stack H7 C8
-freecell C9
-stack S9 H10
-stack C9 D10
-freecell C5
-stack S5 D6
-stack C5 H6
-freecell S9
-stack C9 H10
-stack S9 D10
-freecell C12
-freecell D13
-newstack C7
-freecell C5
-stack H6 C7
-foundation H4
-stack C5 H6
-stack C6 D7
-freecell D11
-stack C6 H7
-newstack C12
-stack D11 C12
-stack C10 D11
-stack C6 D7
-freecell C5
-stack S5 H6
-stack C5 D6
-stack C6 H7
-freecell C9
-stack S9 H10
-stack C9 D10
-stack C6 D7
-freecell S5
-stack C5 H6
-stack S5 D6
-stack C6 H7
+freecell D6
+freecell D12
 freecell C4
-foundation H5
-stack C6 D7
-stack S6 H7
-stack H8 S9
-foundation S4
-foundation S5
-foundation S6
-stack C5 D6
-foundation H6
-foundation H7
-foundation H8
-stack C7 D8
-newstack C4
-freecell S9
-freecell C4
-stack C9 H10
-stack S9 D10
-newstack C4
-freecell C5
-freecell C4
-stack D6 C7
-foundation S7
-stack C5 D6
-newstack C9
-stack S9 H10
-stack C9 D10
-newstack C6
-stack D7 C8
-foundation S8
-foundation S9
-foundation H9
-foundation H10
-stack C6 D7
-newstack C4
-stack D3 C4
 foundation D1
-newstack C9
-stack D10 C11
-stack C9 D10
-newstack D13
-newstack C6
-freecell C10
-freecell D13
-stack C6 D7
-newstack C9
-stack D10 S11
-stack C9 D10
-newstack D11
-stack C10 D11
-newstack D13
-stack C12 D13
-newstack C10
+stack D4 S5
 stack D11 C12
-stack C10 D11
-newstack C9
-stack D10 C11
-stack C9 D10
-newstack C5
-newstack D6
-stack C5 D6
-newstack C9
-stack D10 S11
-stack C9 D10
-newstack C7
-stack D8 C9
-freecell C13
-stack C7 D8
-newstack C5
-stack D6 C7
-stack C5 D6
-newstack C13
-newstack C11
-stack H12 C13
-stack C11 H12
-newstack C6
-newstack D7
-stack C6 D7
+newstack H11
+stack H11 S12
+newstack D11
+stack H11 C12
+stack D11 S12
+newstack S2
+foundation C1
+stack C3 D4
+stack H2 C3
+foundation H1
+foundation H2
+stack D5 S6
+stack S2 D3
 newstack C8
-stack D9 C10
-foundation S10
-foundation H11
-stack C8 D9
-newstack C11
-foundation H12
-newstack D3
-freecell C11
-stack D3 C4
-newstack S12
-foundation H13
-stack D5 C6
-foundation C2
-foundation D2
-foundation D3
+stack S10 H11
+stack S10 D11
 stack C4 D5
+freecell C8
+newstack H11
+stack S10 H11
+stack D11 C12
+stack S10 D11
+stack H11 S12
+newstack S10
+stack S10 H11
+newstack D11
+stack S10 D11
+stack H11 C12
+stack S10 H11
+stack D11 S12
+newstack C11
+stack S10 D11
+foundation D2
+stack S10 H11
+stack H9 S10
+stack C8 H9
+freecell C11
+newstack C3
+stack D4 C5
+stack C3 D4
+newstack S5
+foundation S1
+foundation S2
+foundation D3
+newstack H12
+freecell S5
+newstack C3
+foundation D4
+stack C11 H12
+freecell C3
+newstack C5
+stack H8 C9
+stack H10 C11
+stack C7 H8
+stack C7 D8
+stack C4 H5
+stack C7 H8
+foundation D5
+stack C7 D8
+foundation D6
+freecell C5
+newstack H8
+stack C9 H10
+stack H8 C9
+newstack H13
+stack S7 H8
+newstack D11
+stack S12 H13
+stack D11 S12
 newstack C8
+stack H6 C7
+stack C8 H9
+newstack D11
+stack H6 S7
+stack D11 S12
+newstack C8
+stack S5 H6
+freecell D11
+stack C8 H9
+newstack S12
+stack D11 S12
+freecell H13
+newstack S4
+foundation S3
+foundation S4
+newstack D11
+foundation S5
+stack D11 S12
+newstack C8
+stack H6 C7
+stack C8 H9
+newstack D11
+foundation S6
+stack D11 S12
+newstack C8
+stack H6 S7
+stack C8 H9
+newstack D11
+stack C5 H6
+stack D11 S12
+newstack C8
+freecell D11
+stack C8 H9
+newstack C13
+stack C8 D9
+stack H4 C5
+stack C8 H9
+stack D11 S12
+freecell C13
+newstack D11
+stack C8 D9
+stack D11 S12
+newstack H9
+stack S10 D11
+stack H9 S10
+newstack H11
+stack C8 H9
+stack H11 C12
+newstack C8
+stack D12 S13
+stack C8 H9
+stack C8 D9
+newstack H9
+stack S10 H11
+stack H9 S10
+newstack D11
+freecell S12
+newstack H9
+stack S10 D11
+stack H9 S10
+newstack H11
+stack C8 H9
+stack H11 C12
+newstack C8
+stack C3 H4
+freecell H9
+stack S10 H11
+stack C8 D9
+stack S10 D11
+newstack S10
+stack H9 S10
+freecell D11
+newstack H9
+stack S10 H11
+stack H9 S10
+newstack C8
+stack C8 H9
 newstack D9
 stack C8 D9
-newstack C10
-stack D11 S12
-stack C10 D11
 newstack C8
-stack D9 C10
+stack S8 D9
+stack S8 H9
 stack C8 D9
-newstack C4
-newstack D5
-stack C4 D5
-newstack C6
-stack D7 C8
-stack C6 D7
-newstack C4
-stack D5 C6
-stack C4 D5
-newstack C5
-newstack D6
-stack C5 D6
 newstack C7
-newstack D8
+newstack C8
+stack S8 D9
+stack C8 H9
 stack C7 D8
+newstack C4
+newstack S8
+stack C8 D9
+stack S8 H9
+newstack C3
+stack C4 H5
+newstack C8
+stack S8 D9
+stack C8 H9
+newstack H4
+stack C3 H4
+newstack S8
+stack C8 D9
+stack S8 H9
 newstack C5
-stack D6 C7
-stack C5 D6
-newstack C11
-newstack C9
-stack D10 C11
+stack H6 C7
+stack C5 H6
+newstack C8
+stack S8 D9
+stack C8 H9
+newstack S8
+stack C8 D9
+foundation S7
+stack C8 H9
+foundation S8
+newstack C3
+stack H4 C5
+stack C8 D9
+newstack C8
+stack C3 H4
+stack C8 D9
+stack C8 H9
+newstack C4
+stack C8 D9
+newstack H9
+stack C8 H9
+stack D9 S10
+stack C4 H5
+newstack D9
+newstack S10
+stack D9 S10
+newstack H11
+stack C8 D9
+stack H11 C12
+newstack H13
+stack C8 H9
+freecell D9
+stack S10 H11
+newstack C8
+stack H9 S10
+stack C8 H9
+newstack C3
+newstack C8
+stack S12 H13
+stack C3 H4
+newstack S12
+freecell H13
+newstack H9
+stack C8 H9
+newstack S10
+stack H11 S12
+stack S10 H11
+newstack C8
+stack H9 S10
+newstack C12
+stack S11 D12
+foundation S9
+stack C12 D13
+newstack H9
+foundation S10
+stack H11 C12
+stack C8 H9
+stack H11 S12
+newstack H11
 foundation S11
-stack C9 D10
-stack D12 C13
-newstack S13
-foundation D4
+foundation S12
+newstack C8
+stack H11 C12
+stack C8 H9
+newstack C3
+newstack H11
+stack D11 C12
+freecell C8
+stack C3 H4
+newstack D11
+stack H11 C12
+newstack C3
+stack C8 H9
+freecell H11
+stack D11 C12
+newstack C8
+stack C3 H4
+stack C8 H9
+newstack D11
+newstack C8
+stack H11 C12
+freecell H9
+newstack H11
+stack D11 C12
+newstack D12
+foundation S13
+foundation C2
 foundation C3
 foundation C4
-foundation D5
-foundation C5
-foundation C6
-foundation D6
 foundation D7
-foundation C7
+stack C10 H11
+stack C10 D11
+newstack H4
+stack C10 H11
+foundation C5
+stack C10 D11
+stack D9 C10
+freecell H11
+newstack D9
+stack C8 D9
+newstack C10
+stack H9 C10
+stack C8 H9
+freecell D9
+newstack D11
+stack H11 C12
+freecell D11
+newstack H11
+stack D11 C12
+freecell D12
+newstack D11
+stack H11 C12
+newstack H6
+stack C7 H8
+stack H6 C7
+newstack H11
+stack D11 C12
+newstack C8
 foundation D8
-foundation C8
-foundation C9
+stack C8 H9
+newstack D11
+stack H11 C12
+newstack C8
+foundation C6
+stack C8 H9
+newstack H11
+stack D11 C12
+newstack C8
+newstack D11
 foundation D9
+stack H11 C12
+stack C8 H9
+newstack H11
+newstack C12
+stack H11 C12
+newstack D13
+freecell D13
+newstack H11
+stack H7 C8
+stack H11 C12
 foundation D10
-foundation C10
-foundation C11
+newstack H11
+foundation H3
+stack H11 C12
+newstack H7
+newstack H11
 foundation D11
-foundation S12
-foundation S13
-foundation D12
+stack H7 C8
+stack H11 C12
+newstack H7
+newstack C8
+stack H7 C8
+newstack H11
+newstack H7
+foundation H4
+stack H11 C12
+stack C8 H9
+newstack H11
+stack H7 C8
+stack H11 C12
+foundation H5
+newstack H11
+newstack H7
+stack H11 C12
+newstack C8
+newstack H11
+stack H7 C8
+newstack H9
+newstack H7
+stack C8 H9
+stack C10 H11
+newstack C8
+stack H9 C10
+stack C8 H9
+stack H7 C8
+foundation H6
+foundation H7
+newstack C8
+newstack H9
+stack C8 H9
+newstack C10
+newstack C8
+stack H9 C10
+stack C8 H9
+stack H11 C12
+newstack C8
+newstack H9
+stack C10 H11
+stack C8 H9
+newstack C10
+foundation C7
+stack C10 H11
+foundation C8
+newstack C10
+newstack H11
+stack C10 H11
+stack H9 C10
+foundation H8
+foundation H9
+newstack C10
+stack H11 C12
+stack C10 H11
+foundation C9
+foundation C10
+newstack H11
+foundation H10
+foundation H11
+foundation C11
 foundation C12
+foundation H12
+foundation D12
 foundation C13
+foundation H13
 foundation D13
