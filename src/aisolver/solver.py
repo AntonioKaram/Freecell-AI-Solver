@@ -9,7 +9,7 @@ def heuristic_function(board: Board):
                                  for each_foundation in board.foundations])
     empty_stacks=sum([not stack for stack in board.stacks])
 
-    return cards_in_foundations*60+empty_stacks*30+empty_freecells*10
+    return cards_in_foundations*60+empty_stacks*30+empty_freecells*15+max(list(map(len, board.stacks)))*10
 
 class BFS:
 
@@ -34,7 +34,6 @@ class BFS:
                     if node in self.visited:
                         continue
                     if node.goal():
-                        print('Solved!', node)
                         yield path+[move]
                     else:
                         queue.append((node, path + [move]))
@@ -59,7 +58,6 @@ class DFS:
             state, path = self.start_board, []
 
         if state.goal():
-            print('Solved!', state)
             yield path
 
         for children in state._children():
