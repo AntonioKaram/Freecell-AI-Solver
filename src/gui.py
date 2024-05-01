@@ -128,9 +128,9 @@ class MainWindow(QWidget):
             command = instruction[0]
 
         if not self.arrow_image:
-            self.arrow_image = QPixmap('../data/img/arrow.png').scaled(100, 150, Qt.KeepAspectRatio)
+            self.arrow_image = QPixmap('../data/img/arrow.png').scaled(100, 100, Qt.KeepAspectRatio)
             self.arrow = QGraphicsPixmapItem(self.arrow_image)
-            self.arrow.setPos(0, -30)
+            self.arrow.setPos(0, -60)
             self.scene.addItem(self.arrow)
             
 
