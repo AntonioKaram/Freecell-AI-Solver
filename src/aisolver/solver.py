@@ -7,26 +7,26 @@ from aisolver.prioritqueue import PQAstar, PQBestFirst
 
 def heuristic_function(board: Board):
     distane_to_goal = sum([len([sublist for sublist in each_foundation]) for each_foundation in board.foundations])
-    distance_from_top = mean([int(stack[-1][1:]) if stack else 0 for stack in board.stacks]) - mean([int(stack[-1][1:]) if stack else 0 for stack in board.foundations])
+    distance_from_top = mean([int(stack[-1][1:]) if stack else 0 for stack in board.foundations]) - mean([int(stack[-1][1:]) if stack else 0 for stack in board.stacks]) 
 
-    lowest_foundation = 99
-    for foundation in board.foundations:
-        for card in foundation:
-            lowest_foundation = min(lowest_foundation, int(card[1:]))
-    lowest_home_card = board.MAX_CARD - lowest_foundation
+    # lowest_foundation = 99
+    # for foundation in board.foundations:
+    #     for card in foundation:
+    #         lowest_foundation = min(lowest_foundation, int(card[1:]))
+    # lowest_home_card = board.MAX_CARD - lowest_foundation
 
 
     uppest_foundation = 0
     for foundation in board.foundations:
         for card in foundation:
             uppest_foundation = max(uppest_foundation, int(card[1:]))
-    uppest_home_card = board.MAX_CARD - uppest_foundation
+    # uppest_home_card = board.MAX_CARD - uppest_foundation
 
 
-    difference_home = uppest_foundation - lowest_foundation
-    bottom_cards_sum = (board.MAX_CARD * 4) - sum([int(stack[0][1:]) if stack else 0 for stack in board.stacks])
+    # difference_home = uppest_foundation - lowest_foundation
+    # bottom_cards_sum = (board.MAX_CARD * 4) - sum([int(stack[0][1:]) if stack else 0 for stack in board.stacks])
 
-    return (distane_to_goal * 85) + (distance_from_top *7) + (uppest_home_card * 8)
+    return (distane_to_goal * 85) + (distance_from_top *7) + (uppest_foundation * 8) + (empty_free_cells * 5)
 
 
 class BFS:
