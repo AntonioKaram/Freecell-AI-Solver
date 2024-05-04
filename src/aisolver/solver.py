@@ -8,7 +8,8 @@ from aisolver.prioritqueue import PQAstar, PQBestFirst
 def heuristic_function(board: Board):
     distane_to_goal = sum([len([sublist for sublist in each_foundation]) for each_foundation in board.foundations])
     distance_from_top = mean([int(stack[-1][1:]) if stack else 0 for stack in board.foundations]) - mean([int(stack[-1][1:]) if stack else 0 for stack in board.stacks]) 
-
+    empty_free_cells = sum([0 if cell else 1 for cell in board.freecells])
+    
     # lowest_foundation = 99
     # for foundation in board.foundations:
     #     for card in foundation:
