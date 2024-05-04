@@ -31,7 +31,7 @@ class PQAstar(PriorityQueue):
     def put(self, board_path: tuple):
         board, path = board_path
         heapq.heappush(self.heap, \
-            PriorityQueue.BoardPathPair(board, path, self.heuristic(board)+len(path)))
+            PriorityQueue.BoardPathPair(board, path, -self.heuristic(board)-len(path)))
 
 class PQBestFirst(PriorityQueue):
     def __init__(self, heuristic):
@@ -40,4 +40,4 @@ class PQBestFirst(PriorityQueue):
     def put(self, board_path: tuple):
         board, path = board_path
         heapq.heappush(self.heap, \
-            PriorityQueue.BoardPathPair(board, path, self.heuristic(board)))
+            PriorityQueue.BoardPathPair(board, path, -self.heuristic(board)))
