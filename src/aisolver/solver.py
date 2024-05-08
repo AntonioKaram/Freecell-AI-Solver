@@ -13,7 +13,6 @@ def heuristic_function(board: Board):
     for foundation in board.foundations:
         for card in foundation:
             lowest_foundation = min(lowest_foundation, int(card[1:]))
-    lowest_home_card = board.MAX_CARD - lowest_foundation
 
 
     uppest_foundation = 0
@@ -23,10 +22,6 @@ def heuristic_function(board: Board):
             
             
     uppest_home_card = board.MAX_CARD - uppest_foundation
-
-
-    difference_home = uppest_foundation - lowest_foundation
-    bottom_cards_sum = (board.MAX_CARD * 4) - sum([int(stack[0][1:]) if stack else 0 for stack in board.stacks])
 
     return (distane_to_goal * 85) + (distance_from_top *7) + (uppest_home_card * 8)
 
