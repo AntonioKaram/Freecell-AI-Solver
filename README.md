@@ -1,6 +1,5 @@
 # Freecell-AI-Solver
-**Task**: write a program that reads data from the game and determines how to win if possible (e.g., a decision-making algorithm that utilizes the data read from the game and helps players) using OllyDbg, IDA, Exeinfope, and WinHex.
-- [Bonus] Complete the challenge by automatically moving the cards according to the output of your program.
+A program that reads data from the game and determines how to win if possible (e.g., a decision-making algorithm that utilizes the data read from the game and helps players) using OllyDbg, IDA, Exeinfope, and WinHex.
 
 # File Hashes
 - Freecell.exe (SHA1:71e8dc557697ff81896c456fc224bbfdcf167674)
