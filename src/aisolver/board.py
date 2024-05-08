@@ -6,6 +6,8 @@ class Board:
     MAX_CARD = 13
 
     def __init__(self, board):
+        
+        # Board has stacks, freecells, and foundations
         self.board = tuple(board)
         self.stacks = board[0]
         self.freecells = board[1]
@@ -15,12 +17,14 @@ class Board:
     def __str__(self):
         return '{}'.format(self.board)
 
+    # Override key directive
     def __key(self):
         t_stacks = tuple(tuple(s) for s in self.stacks if s!=[])
         st_stacks = tuple(sorted(t_stacks, key=lambda item:item[-1]))
         t_freecells = tuple(filter(lambda item:item!=0, self.freecells))
         st_freecells = tuple(sorted(t_freecells, key=lambda item:item[:]))
         t_foundations = tuple(tuple(f) for f in self.foundations)
+        
         return (st_stacks, st_freecells, t_foundations)
 
     # Override hash declaration
@@ -35,12 +39,14 @@ class Board:
     def new_board(cls, board):
         return Board(copy.deepcopy(board))
     
+    # Get card location
     def card_index(self, card):
         if card in self.freecells:
             return ('freecells', self.freecells.index(card))
         else:
             return ('stacks', next((i for i,stack in enumerate(self.stacks) if card in stack),None))
 
+    # Remove a card
     def remove(self, card):
         (place, idx) = self.card_index(card)
         if place=='freecells':
@@ -48,6 +54,7 @@ class Board:
         else:
             self.stacks[idx].pop()
 
+    # Rules for moving to the stack
     @staticmethod
     def move_to_stack_requirements(card, other_card):
         suit, other_suit, value, other_value = 1 if card[0] in ('H','D') else 0,\
@@ -60,6 +67,7 @@ class Board:
         else:
             return False
     
+    # Rules for reaching the goal
     def goal(self):
         done = 0
         for idx,suit in zip(range(4),('H','D','S','C')):
@@ -67,9 +75,11 @@ class Board:
                 done+=1
         return True if done==4 else False
 
-    def move_to_freecell(self, card):
+    # Get index for moving to freecell
+    def move_to_freecell(self):
         return next((idx for idx,val in enumerate(self.freecells) if not val),None)
 
+    # Get index for moving to foundation
     def move_to_foundation(self, card):
         suit,value=card[0],int(card[1:])
         if suit=='H':
@@ -89,14 +99,18 @@ class Board:
                     (self.foundations[3] and value==int(self.foundations[3][-1][1:])+1)):
                 return 3
 
+    # Get index for moving to stack
     def move_to_stack(self, card):
         yield from (idx for idx,stack in enumerate(self.stacks) if stack and 
                     self.move_to_stack_requirements(card,stack[-1]) or not stack)
 
+    # Move the card
     def move(self, card):
 
-        foundation_idx, freecell_idx, stack_idx = self.move_to_foundation(card),\
-                    self.move_to_freecell(card),[idx for idx in self.move_to_stack(card)]
+        foundation_idx = self.move_to_foundation(card)
+        freecell_idx = self.move_to_freecell()
+        stack_idx = [idx for idx in self.move_to_stack(card)]
+        
         if foundation_idx in (range(4)):
             new_board = [Board.new_board(self.board), None]
             new_board[0].remove(card)
@@ -122,6 +136,7 @@ class Board:
 
         return [(Board.new_board(self.board),None)]
 
+    # Get a generator of children
     def _children(self):
         if not all(not s for s in self.stacks):
             cards_to_move = tuple(list(list(zip(*[reversed(card) for card in self.stacks if card]))[0])+\

@@ -1,8 +1,6 @@
-import ctypes
-import win32api
-import win32process
-import win32con
 import psutil
+import ctypes
+import win32con # type: ignore
 
 class processMemoryReader:
     def __init__(self, process_name):
@@ -10,9 +8,12 @@ class processMemoryReader:
         self.process_id = self._get_process_id()
 
     def _get_process_id(self):
+        
+        # Get proccess id from process name
         for proc in psutil.process_iter(['pid', 'name']):
            if proc.info['name'] == self.process_name:
                return proc.info['pid']
+           
         return None
 
     def read_memory(self, address, size_of_data=4):
@@ -26,16 +27,19 @@ class processMemoryReader:
         data = ctypes.c_uint(size_of_data)
         bytesRead = ctypes.c_uint(size_of_data)
         current_address = address
-
         ctypes.windll.kernel32.ReadProcessMemory(
                 p_handle, current_address, ctypes.byref(data),
                 ctypes.sizeof(data), ctypes.byref(bytesRead)
             )
 
+        # Close the handle
         ctypes.windll.kernel32.CloseHandle(p_handle)
+        
         return data.value
     
     def write_to_file(path: list, filename: str):
+        
+        # Write output to a given file
         with open(filename, 'w') as outfile:
             try:
                 outfile.write(str(len(path))+'\n')
